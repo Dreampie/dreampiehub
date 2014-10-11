@@ -1,7 +1,12 @@
-apply plugin: 'java'
+//apply plugin: 'java' java project
+apply plugin: 'war' //web project
+apply plugin: 'idea'
+apply plugin: 'jetty'
 
 sourceCompatibility = 1.7
 version = '1.0'
+
+webAppDirName='webapp'
 
 repositories {
     mavenCentral()
