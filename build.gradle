@@ -4,23 +4,32 @@ apply plugin: 'idea'
 apply plugin: 'jetty'
 
 sourceCompatibility = 1.7
+targetCompatibility = 1.7
 version = '1.0'
 
-webAppDirName='webapp'
+webAppDirName = 'webapp'
 
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+ext {
+    junitVersion = '4.11'
 }
 
-[jettyRun, jettyRunWar,jettyStop]*.with {
-    webDefaultXml = file("${rootDir}/webdefault.xml")
+[compileJava, compileTestJava, javadoc]*.options*.encoding = "UTF-8"
+dependencies {
+    testCompile 'junit:junit:$junitVersion'
+}
+
+[jettyRun, jettyRunWar]*.with {
+    webDefaultXml = file("${rootDir}/src/main/resources/webdefault.xml")
 }
 
 jettyRun {
-    reload ="automatic"
-    scanIntervalSeconds = 1
+//    webAppSourceDirectory file("$projectDir/src/main/webapp")
+    httpPort 8080
+//    contextPath project.name
+    scanIntervalSeconds 1
+    reload 'automatic'
 }
